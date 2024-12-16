@@ -1,0 +1,12 @@
+version: '3'
+tasks:
+  init:
+    description: Initialize data for benchmark
+    cmds:
+      - mysql -u root -e 'DROP DATABASE IF EXISTS asyncmap_test; CREATE DATABASE asyncmap_test DEFAULT CHARSET utf8mb4;'
+      - mysql -uroot asyncmap_test < mysql.sql
+      - go run ./cmd/generatefixture
+  bench:
+    description: Run benchmark
+    cmds:
+      - go test -count 1 -bench .
